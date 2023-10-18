@@ -1,60 +1,36 @@
-import express, { json } from "express";
-import { config } from "./config";
-import { createServer } from "http";
-import { Server } from "socket.io";
-import { emitNewRotation } from "./services/socketsIO";
-const cors = require("cors");
+const net = require("net"); // Import network library (built-in with Node)
 
-const { port, host } = config;
-const app = express();
-app.use(json());
-app.use(cors());
+// Server logic
+// - What to do with incoming connections and data?
+const server = net.createServer((socket) => {
+  // Create socket connection
+  console.log("client connected"); // Raspberry Pi connection established
 
-const server = createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
-});
-
-app.get("/", (req, res) => {
-  res.send({ status: 200, message: "ok" });
-});
-
-app.post("/", (req, res) => {
-  try {
-    const { body } = req;
-    console.log(body);
-    if (Object.keys(body).length <= 0 || !body) {
-      return res.status(400).send({
-        status: 400,
-        message: "Bad Request",
-      });
-    }
-    emitNewRotation(body);
-    res.send({ status: 200, message: "ok" });
-  } catch (error) {}
-});
-
-io.on("connection", (socket) => {
-  console.log(`User connected with socket id: ${socket.id}`);
+  // When data is sent within the socket
   socket.on("data", (data) => {
-    console.log(`Data received from client ${socket.id}: ${data}`);
-    // Puedes realizar cualquier otra acción que desees con los datos aquí
+    const msg = data.toString(); // Parse data
+    console.log("received data:", msg); // Log data
+    socket.write("server response"); // Respond to Raspberry Pi
   });
 
-  socket.on("disconnect", () => {
-    console.log(`User disconnected with socket id: ${socket.id}`);
+  // The Raspberry Pi disconnected
+  socket.on("end", () => {
+    console.log("client disconnected");
   });
 });
+
+// Catch errors as they arise
+server.on("error", (err) => {
+  console.error("server error:", err);
+});
+
+// Start the server
 
 export const setupServer = async (): Promise<void> => {
   return new Promise((resolve) => {
-    server.listen(port, host, () => {
-      console.log(`App running on http://${host}:${port}`);
+    server.listen(3000, () => {
+      console.log("Server listening on port 3000");
       resolve();
     });
   });
 };
-
-export { server, io }; // Exporta la instancia de Socket.io
