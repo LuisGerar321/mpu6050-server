@@ -24,13 +24,14 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
   try {
     const { body } = req;
-    if (Object.keys(body).length > 0 || !body) {
+    console.log(body);
+    if (Object.keys(body).length <= 0 || !body) {
       return res.status(400).send({
         status: 400,
         message: "Bad Request",
       });
-      emitNewRotation(body);
     }
+    emitNewRotation(body);
     res.send({ status: 200, message: "ok" });
   } catch (error) {}
 });
