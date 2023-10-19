@@ -11,9 +11,9 @@ const server = net.createServer((socket) => {
   // When data is sent within the socket
   socket.on("data", (data) => {
     const msg = data.toString(); // Parse data
-    console.log("received data from pi:", msg); // Log data
+    console.log("Received data from Socket Client Device:", msg); // Log data
     emitNewRotation(JSON.parse(data));
-    socket.write("server response"); // Respond to Raspberry Pi
+    //socket.write("server response"); // Respond to Raspberry Pi
   });
 
   // The Raspberry Pi disconnected
