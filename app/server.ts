@@ -11,7 +11,7 @@ const server = net.createServer((socket) => {
   // When data is sent within the socket
   socket.on("data", (data) => {
     const msg = data.toString(); // Parse data
-    console.log("received data:", msg); // Log data
+    console.log("received data from pi:", msg); // Log data
     emitNewRotation(data);
     socket.write("server response"); // Respond to Raspberry Pi
   });
