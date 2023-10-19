@@ -12,7 +12,7 @@ const server = net.createServer((socket) => {
   socket.on("data", (data) => {
     const msg = data.toString(); // Parse data
     console.log("received data from pi:", msg); // Log data
-    emitNewRotation(data);
+    emitNewRotation(JSON.parse(data));
     socket.write("server response"); // Respond to Raspberry Pi
   });
 
