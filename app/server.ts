@@ -1,3 +1,5 @@
+import { emitNewRotation } from "./services/socketsIO";
+
 const net = require("net"); // Import network library (built-in with Node)
 
 // Server logic
@@ -10,6 +12,7 @@ const server = net.createServer((socket) => {
   socket.on("data", (data) => {
     const msg = data.toString(); // Parse data
     console.log("received data:", msg); // Log data
+    emitNewRotation(data);
     socket.write("server response"); // Respond to Raspberry Pi
   });
 
@@ -28,8 +31,8 @@ server.on("error", (err) => {
 
 export const setupServer = async (): Promise<void> => {
   return new Promise((resolve) => {
-    server.listen(3000, () => {
-      console.log("Server listening on port 3000");
+    server.listen(4000, () => {
+      console.log("Server listening on port 4000");
       resolve();
     });
   });
