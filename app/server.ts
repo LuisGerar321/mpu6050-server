@@ -10,9 +10,11 @@ const server = net.createServer((socket) => {
 
   // When data is sent within the socket
   socket.on("data", (data) => {
+    const buffer: [] = data.toString().split("\n");
+
     try {
-      console.log("type: ", typeof data);
-      emitNewRotation(JSON.parse(data));
+      buffer.map((data) => emitNewRotation(JSON.parse(data)));
+
       //socket.write("server response"); // Respond to Raspberry Pi
     } catch (e) {
       console.log(
