@@ -10,15 +10,15 @@ const server = net.createServer((socket) => {
 
   // When data is sent within the socket
   socket.on("data", (data) => {
-    const buffer: [] = data.toString().split("\n");
+    const buffer: string[] = data.toString().split("\n");
 
     try {
-      buffer.map((data: string) => {
-        if (data.includes("{") && data.includes("}")) {
-          emitNewRotation(JSON.parse(data));
-        }
-      });
-
+      // buffer.map((data: string) => {
+      //   if (data.includes("{") && data.includes("}")) {
+      //     emitNewRotation(JSON.parse(data));
+      //   }
+      // });
+      emitNewRotation(JSON.parse(buffer[0]));
       //socket.write("server response"); // Respond to Raspberry Pi
     } catch (e) {
       console.log(
