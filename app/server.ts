@@ -11,7 +11,7 @@ const server = net.createServer((socket) => {
   // When data is sent within the socket
   socket.on("data", (data) => {
     const buffer: string[] = data.toString().split("\n");
-    if (buffer.length > 1) return;
+    // if (buffer.length > 1) return;
 
     try {
       // buffer.map((data: string) => {
