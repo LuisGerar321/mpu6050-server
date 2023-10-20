@@ -1,16 +1,20 @@
 import { emitNewRotation } from "./services/socketsIO";
 
 function sanitizateObject(inputString) {
-  const parts = inputString.split("}{");
-  let primerObjeto;
+  try {
+    const parts = inputString.split("}{");
+    let primerObjeto;
 
-  if (parts.length > 1) {
-    primerObjeto = parts[0] + "}";
-  } else {
-    primerObjeto = inputString;
+    if (parts.length > 1) {
+      primerObjeto = parts[0] + "}";
+    } else {
+      primerObjeto = inputString;
+    }
+
+    return primerObjeto;
+  } catch (error) {
+    console.error("the error : ", error);
   }
-
-  return primerObjeto;
 }
 
 const net = require("net"); // Import network library (built-in with Node)
