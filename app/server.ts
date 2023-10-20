@@ -28,6 +28,7 @@ const server = net.createServer((socket) => {
   // When data is sent within the socket
   socket.on("data", (data) => {
     try {
+      console.log("type: ", typeof data);
       emitNewRotation(JSON.parse(data));
       //socket.write("server response"); // Respond to Raspberry Pi
     } catch (e) {
