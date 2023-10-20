@@ -20,7 +20,7 @@ const server = net.createServer((socket) => {
       // });
       const dataToSend = buffer[0];
       if (dataToSend.includes("{") && dataToSend.includes("}")) {
-        emitNewRotation(JSON.parse(data));
+        emitNewRotation(JSON.parse(dataToSend));
       }
       data = "";
 
