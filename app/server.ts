@@ -19,6 +19,7 @@ const server = net.createServer((socket) => {
       //   }
       // });
       emitNewRotation(JSON.parse(buffer[0]));
+      data = "";
       //socket.write("server response"); // Respond to Raspberry Pi
     } catch (e) {
       console.log(
