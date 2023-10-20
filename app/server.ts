@@ -1,22 +1,5 @@
 import { emitNewRotation } from "./services/socketsIO";
 
-function sanitizateObject(inputString) {
-  try {
-    const parts = inputString.split("}{");
-    let primerObjeto;
-
-    if (parts.length > 1) {
-      primerObjeto = parts[0] + "}";
-    } else {
-      primerObjeto = inputString;
-    }
-
-    return primerObjeto;
-  } catch (error) {
-    console.error("the error : ", error);
-  }
-}
-
 const net = require("net"); // Import network library (built-in with Node)
 
 // Server logic
@@ -32,7 +15,7 @@ const server = net.createServer((socket) => {
       emitNewRotation(JSON.parse(data));
       //socket.write("server response"); // Respond to Raspberry Pi
     } catch (e) {
-      console.log("Error when trying to send data: ", data.toString());
+      console.log("Error when trying to send data: ", data);
     }
   });
 
