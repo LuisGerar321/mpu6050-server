@@ -14,10 +14,9 @@ const server = net.createServer((socket) => {
 
     try {
       buffer.map((data: string) => {
-        if (!data.includes("{") && !data.includes("}")) {
-          return;
+        if (data.includes("{") && data.includes("}")) {
+          emitNewRotation(JSON.parse(data));
         }
-        emitNewRotation(JSON.parse(data));
       });
 
       //socket.write("server response"); // Respond to Raspberry Pi
