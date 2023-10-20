@@ -11,6 +11,7 @@ const server = net.createServer((socket) => {
   // When data is sent within the socket
   socket.on("data", (data) => {
     const buffer: string[] = data.toString().split("\n");
+    if (buffer.length > 1) return;
 
     try {
       // buffer.map((data: string) => {
@@ -19,6 +20,7 @@ const server = net.createServer((socket) => {
       //   }
       // });
       const dataToSend = buffer[0];
+      if (dataToSend.length > 1) return;
       if (dataToSend.includes("{") && dataToSend.includes("}")) {
         emitNewRotation(JSON.parse(dataToSend));
       }
