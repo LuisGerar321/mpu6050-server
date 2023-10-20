@@ -15,7 +15,7 @@ const server = net.createServer((socket) => {
       emitNewRotation(JSON.parse(data));
       //socket.write("server response"); // Respond to Raspberry Pi
     } catch (e) {
-      console.log("Error when trying to send data: ", data);
+      console.log("Error when trying to send data: ", data.split("\n"));
     }
   });
 
