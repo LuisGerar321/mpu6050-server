@@ -28,10 +28,7 @@ const server = net.createServer((socket) => {
   // When data is sent within the socket
   socket.on("data", (data) => {
     try {
-      const msg = sanitizateObject(data);
-      console.log(msg);
-      //console.log("Received data from Socket Client Device:", msg); // Log data
-      emitNewRotation(JSON.parse(msg));
+      emitNewRotation(JSON.parse(data));
       //socket.write("server response"); // Respond to Raspberry Pi
     } catch (e) {
       console.log("Error when trying to send data: ", data.toString());
