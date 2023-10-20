@@ -25,7 +25,7 @@ const server = net.createServer((socket) => {
   socket.on("data", (data) => {
     try {
       const msg = sanitizateObject(data);
-
+      console.log(msg);
       //console.log("Received data from Socket Client Device:", msg); // Log data
       emitNewRotation(JSON.parse(msg));
       //socket.write("server response"); // Respond to Raspberry Pi
