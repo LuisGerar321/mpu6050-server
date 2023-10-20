@@ -17,7 +17,7 @@ const server = net.createServer((socket) => {
     } catch (e) {
       console.log(
         "Error when trying to send data: ",
-        data.toString().split("}{")
+        data.toString().split("\n")
       );
     }
   });
